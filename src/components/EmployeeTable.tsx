@@ -142,27 +142,27 @@ const EmployeeTable = () => {
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="text-sm text-gray-600">
+                                <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Name
                                     {sortBy === "name" ? <FaCaretDown className="ml-2" /> : sortBy === "name-reverse" ? <FaCaretUp className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => changeSortBy("name")}>A-Z</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => changeSortBy("name-reverse")}>Z-A</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("name")}>A-Z</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("name-reverse")}>Z-A</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className="text-sm text-gray-600">
+                                <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Hire date
                                     {sortBy === "hire-date" ? <FaCaretDown className="ml-2" /> : sortBy === "hire-date-reverse" ? <FaCaretUp className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => changeSortBy("hire-date")}>Newest First</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => changeSortBy("hire-date-reverse")}>Oldest First</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("hire-date")}>Newest First</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("hire-date-reverse")}>Oldest First</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
@@ -210,7 +210,7 @@ const EmployeeTable = () => {
                                 <TableCell>{employee.hireDate}</TableCell>
                                 <TableCell className="flex gap-3 justify-end">
                                     <EmployeeModal type="Edit" employee={employee} refreshEmployees={handleGetEmployees} />
-                                    <Button variant="destructive" onClick={() => handleDeleteEmployee(employee.id)}>
+                                    <Button variant="destructive" className='hover:cursor-pointer' onClick={() => handleDeleteEmployee(employee.id)}>
                                         Delete
                                     </Button>
                                 </TableCell>

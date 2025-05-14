@@ -121,12 +121,16 @@ const LoginForm = () => {
             <div className="flex items-center gap-2">
                 <Checkbox
                     id="remember"
+                    className='hover:cursor-pointer'
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(Boolean(checked))}
                 />
                 <Label htmlFor="remember">Remember me</Label>
             </div>
-            <Button onClick={handleLogin} disabled={!inputsFilled || loggingIn}>
+            <Button 
+            className='hover:cursor-pointer'
+            onClick={handleLogin} 
+            disabled={!inputsFilled || loggingIn}>
                 {loggingIn ? (
                     <>
                         <AiOutlineLoading className="h-6 w-6 animate-spin mr-3" />

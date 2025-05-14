@@ -6,7 +6,7 @@ import { Label } from './ui/label'
 import Link from 'next/link'
 import { createUser } from '@/lib/services/user-services';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { AiOutlineLoading } from "react-icons/ai";
 
 const CreateAccountForm = () => {
@@ -91,6 +91,7 @@ const CreateAccountForm = () => {
         />
       </div>
       <Button
+        className='hover:cursor-pointer'
         onClick={handleCreateUser}
         disabled={!inputsFilled || creatingAccount}
       >
