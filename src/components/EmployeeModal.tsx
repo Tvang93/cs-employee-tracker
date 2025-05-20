@@ -48,7 +48,7 @@ const EmployeeModal = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Ed
     };
 
     // Change employee functions
-    const handleEmployeeToChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEmployeeToChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setEmployeeToChange({
             ...employeeToChange,
             [e.target.id]: e.target.value,
@@ -161,11 +161,25 @@ const EmployeeModal = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Ed
                             <div className="mb-2 block">
                                 <Label htmlFor="jobTitle">Job title</Label>
                             </div>
-                            <Input
+
+    {/* -------------------- make change here -------------------------- */}
+                            <select
+                            className="ml-3 text-sm border rounded p-1 hover:cursor-pointer"
+                            value={employeeToChange.jobTitle}
+                            onChange={handleEmployeeToChange}
+                        >
+                            <option className='hover:cursor-pointer' value="" disabled>
+                                Job title
+                            </option>
+                            <option className='cursor-pointer' value="Customer Support">Customer Support</option>
+                            <option className='cursor-pointer' value="IT Support Specialist">IT Support Specialist</option>
+                            <option className='cursor-pointer' value="Software Engineer">Software Engineer</option>
+                        </select>
+                            {/* <Input
                                 id="jobTitle"
                                 value={employeeToChange.jobTitle}
                                 onChange={handleEmployeeToChange}
-                            />
+                            /> */}
                         </div>
                     </div>
                     <div>

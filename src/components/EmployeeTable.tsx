@@ -167,7 +167,7 @@ const EmployeeTable = () => {
                         </DropdownMenu>
 
                         <select
-                            className="ml-3 text-sm border rounded p-1"
+                            className="ml-3 text-sm border rounded p-1 hover:cursor-pointer"
                             value={sortBy === "job-title" ? sortByJob : ""}
                             onChange={changeSortByJob}
                         >
