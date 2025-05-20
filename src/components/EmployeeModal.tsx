@@ -23,7 +23,7 @@ const EmployeeModal = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Ed
         id: 0,
         name: "",
         jobTitle: "",
-        hireDate: "",
+        hireDate: ""
     });
 
     const [token, setToken] = useState('');
@@ -44,7 +44,7 @@ const EmployeeModal = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Ed
 
     const onCloseModal = () => {
         setOpenModal(false);
-        setEmployeeToChange({ id: 0, name: "", jobTitle: "", hireDate: "" });
+        setEmployeeToChange({ id: 0, name: "", jobTitle: "", hireDate: ""});
     };
 
     // Change employee functions

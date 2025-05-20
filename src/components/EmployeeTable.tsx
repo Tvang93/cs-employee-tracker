@@ -22,7 +22,7 @@ const EmployeeTable = () => {
 
     const [token, setToken] = useState('');
 
-    const [sortBy, setSortBy] = useState("");
+    const [sortBy, setSortBy] = useState("name");
     const [sortByJob, setSortByJob] = useState("");
 
     // Function to get employees
@@ -42,18 +42,16 @@ const EmployeeTable = () => {
     };
 
     // Updating sort functions
-    const changeSortBy = (value: string) => {
-        if (value == "name" && sortBy == "name") {
-            setSortBy(`${value}-reverse`);
-        } else if (value == "hire-date" && sortBy == "hire-date") {
-            setSortBy(`${value}-reverse`);
-        } else {
-            setSortBy(value);
-        }
 
-        if (sortByJob) {
+    useEffect(()=>{
+        console.log("sortBy", sortBy)
+    }, [sortBy])
+
+    const changeSortBy = (value: string) => {
+        if (value == sortByJob) {
             setSortByJob("");
         }
+        setSortBy(value)
     };
 
     const changeSortByJob = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -107,7 +105,7 @@ const EmployeeTable = () => {
         const handleSorting = () => {
             switch (sortBy) {
                 case "name":
-                    sortingEmployees.sort((a: Employee, b: Employee) => a.name.localeCompare(b.name));
+                    sortingEmployees.sort((a: Employee, b: Employee) => b.name.localeCompare(a.name));
                     break;
                 case "name-reverse":
                     sortingEmployees.sort((a: Employee, b: Employee) => b.name.localeCompare(a.name));
@@ -153,6 +151,7 @@ const EmployeeTable = () => {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Name
+                {/* ----------------This section is off (sorting) ------------------------ */}
                                     {sortBy === "name" ? <FaCaretDown className="ml-2" /> : sortBy === "name-reverse" ? <FaCaretUp className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
@@ -166,7 +165,8 @@ const EmployeeTable = () => {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Hire date
-                                    {sortBy === "hire-date" ? <FaCaretDown className="ml-2" /> : sortBy === "hire-date-reverse" ? <FaCaretUp className="ml-2" /> : ""}
+                {/* ----------------This section is off (sorting) ------------------------ */}
+                                    {sortBy === "hire-date" ? <FaCaretUp className="ml-2" /> : sortBy === "hire-date-reverse" ? <FaCaretDown className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>

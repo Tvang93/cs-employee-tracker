@@ -4,8 +4,8 @@ export interface Employee {
     name: string;
     jobTitle: string;
     hireDate: string;
-    details: string | null;
-    status: string | null;
+    details?: string | null;
+    status?: string | null;
 }
 
 
