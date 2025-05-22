@@ -166,7 +166,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
           arrToSort.sort((a: Employee, b: Employee) => a.id - b.id);
           break;
       }
-      const slicedArr = arrToSort.slice(number*10-10, number*10)
+      const slicedArr = arrToSort.slice(number*numOfEntriesPerPage-numOfEntriesPerPage, number*numOfEntriesPerPage)
       setSortedEmployees([...slicedArr]);
     };
     if (sortBy === "job-title") {
@@ -179,11 +179,15 @@ function chunkArray<T>(array: T[], size: number): T[][] {
     }
   }, [sortedEmployeesArr, sortBy, sortByJob, pageNum]);
 
-  const handlePageChange = (number: number) => {
-    if(number>1){
-        setPageNum(pageNum+1)
-    }else{
-        setPageNum(pageNum-1)
+  const handlePageChangeUp = () => {
+    if(pageNum < Math.ceil(employees.length/numOfEntriesPerPage)){
+        setPageNum(pageNum + 1)
+    }
+  }
+
+  const handlePageChangeDown = () => {
+    if(pageNum > 1){
+        setPageNum(pageNum - 1)
     }
   }
 
@@ -331,7 +335,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious className={`${pageNum > 1 ? `hover:cursor-pointer` : `hover:cursor-not-allowed`}`} onClick={()=>handlePageChange(1)} />
+          <PaginationPrevious className={`${pageNum > 1 ? `hover:cursor-pointer` : `hover:cursor-auto`}`} onClick={handlePageChangeDown} />
         </PaginationItem>
         {sortedEmployeesArr.length === 0 ? (
             <PaginationItem>
@@ -345,7 +349,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
             )
         )}
         <PaginationItem>
-          <PaginationNext className={`${pageNum <= Math.ceil(sortedEmployeesArr.length/10) ? `hover:cursor-pointer` : `hover:cursor-not-allowed`}`} onClick={()=>handlePageChange(-1)} />
+          <PaginationNext className={`${pageNum < Math.ceil(employees.length/numOfEntriesPerPage) ? `hover:cursor-pointer` : `hover:cursor-auto`}`} onClick={handlePageChangeUp} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
