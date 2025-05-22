@@ -150,8 +150,8 @@ const EmployeeTable = () => {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("name")}>A-Z</DropdownMenuItem>
-                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("name-reverse")}>Z-A</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer hover:bg-gray-100' onClick={() => changeSortBy("name")}>A-Z</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer hover:bg-gray-100' onClick={() => changeSortBy("name-reverse")}>Z-A</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
@@ -163,8 +163,8 @@ const EmployeeTable = () => {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("hire-date")}>Newest First</DropdownMenuItem>
-                                <DropdownMenuItem className='hover:cursor-pointer' onClick={() => changeSortBy("hire-date-reverse")}>Oldest First</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer hover:bg-gray-100' onClick={() => changeSortBy("hire-date")}>Newest First</DropdownMenuItem>
+                                <DropdownMenuItem className='hover:cursor-pointer hover:bg-gray-100' onClick={() => changeSortBy("hire-date-reverse")}>Oldest First</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
