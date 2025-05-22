@@ -10,6 +10,7 @@ import { Button } from './ui/button';
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from './ui/table';
 import EmployeeModal from './EmployeeModal';
 import { useAppContext } from '@/lib/context/context';
+import { set } from 'react-hook-form';
 
 const EmployeeTable = () => {
     const { push } = useRouter();
@@ -22,7 +23,7 @@ const EmployeeTable = () => {
 
     const [token, setToken] = useState('');
 
-    const [sortBy, setSortBy] = useState("name");
+    const [sortBy, setSortBy] = useState("");
     const [sortByJob, setSortByJob] = useState("");
 
     // Function to get employees
@@ -42,15 +43,23 @@ const EmployeeTable = () => {
     };
 
     // Updating sort functions
-
-    useEffect(()=>{
-        console.log("sortBy", sortBy)
-    }, [sortBy])
-
     const changeSortBy = (value: string) => {
-        if (value == sortByJob) {
+        // if (value == "name" && sortBy == "name") {
+        //     setSortBy(`${value}-reverse`);
+        // } else if (value == "hire-date" && sortBy == "hire-date") {
+        //     setSortBy(`${value}-reverse`);
+        // } else {
+        //     setSortBy(value);
+        // }
+
+        // if(value != sortBy){
+        //     setSortBy(value)
+        // }
+
+        if(value != sortByJob) {
             setSortByJob("");
         }
+        
         setSortBy(value)
     };
 
@@ -59,6 +68,7 @@ const EmployeeTable = () => {
 
         setSortByJob(e.target.value);
     };
+
 
     // Delete employee
     const handleDeleteEmployee = async (id: number) => {
@@ -101,37 +111,47 @@ const EmployeeTable = () => {
     // Sorting the employees
     useEffect(() => {
         const sortingEmployees = employees;
-
-        const handleSorting = () => {
+        console.log("sortByJob", sortByJob)
+        console.log("debugging", sortBy)
+        const handleSorting = (arrToSort: Employee[]) => {
             switch (sortBy) {
                 case "name":
-                    sortingEmployees.sort((a: Employee, b: Employee) => b.name.localeCompare(a.name));
+                    arrToSort.sort((a: Employee, b: Employee) => a.name.localeCompare(b.name));
                     break;
                 case "name-reverse":
-                    sortingEmployees.sort((a: Employee, b: Employee) => b.name.localeCompare(a.name));
+                    arrToSort.sort((a: Employee, b: Employee) => b.name.localeCompare(a.name));
                     break;
                 case "hire-date":
-                    sortingEmployees.sort(
+                    arrToSort.sort(
                         (a: Employee, b: Employee) => Number(new Date(b.hireDate)) - Number(new Date(a.hireDate))
                     );
                     break;
                 case "hire-date-reverse":
-                    sortingEmployees.sort(
+                    arrToSort.sort(
                         (a: Employee, b: Employee) => Number(new Date(a.hireDate)) - Number(new Date(b.hireDate))
                     );
                     break;
-                case "job-title":
-                    sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob);
-                    break;
+                // case "job-title":
+                //     return sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob);
+                    // console.log(sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob))
+                    // console.log(sortingEmployees)
+                    // break;
                 default:
-                    sortingEmployees.sort((a: Employee, b: Employee) => a.id - b.id);
+                    arrToSort.sort((a: Employee, b: Employee) => a.id - b.id);
                     break;
             }
-            setSortedEmployees(sortingEmployees);
+            // if(sortBy === "job-title"){
+            //     setSortedEmployees([...sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob)]);
+            // }else{
+            //     setSortedEmployees([...sortingEmployees]);
+            // }
+            setSortedEmployees([...arrToSort]);
         };
-
-        handleSorting();
-
+        if(sortByJob.trim() != ""){
+            handleSorting(sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob));
+        }else{
+            handleSorting(sortingEmployees);
+        }
     }, [employees, sortBy, sortByJob]);
 
     return (
