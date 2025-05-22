@@ -123,7 +123,7 @@ const EmployeeTable = () => {
             }
             setSortedEmployees([...arrToSort]);
         };
-        if(sortByJob.trim() != ""){
+        if(sortBy === "job-title"){
             handleSorting(sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob));
         }else{
             handleSorting(sortingEmployees);
