@@ -335,7 +335,12 @@ function chunkArray<T>(array: T[], size: number): T[][] {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious className={`${pageNum > 1 ? `hover:cursor-pointer` : `hover:cursor-auto`}`} onClick={handlePageChangeDown} />
+          <PaginationPrevious 
+          className={`${pageNum > 1 ? `hover:cursor-pointer` : `hover:cursor-auto opacity-50 hover:bg-transparent`}`} 
+          onClick={handlePageChangeDown} 
+          aria-disabled={pageNum == 1}
+          tabIndex={pageNum == 1 ? -1 : undefined}
+          />
         </PaginationItem>
         {sortedEmployeesArr.length === 0 ? (
             <PaginationItem>
@@ -349,7 +354,12 @@ function chunkArray<T>(array: T[], size: number): T[][] {
             )
         )}
         <PaginationItem>
-          <PaginationNext className={`${pageNum < Math.ceil(employees.length/numOfEntriesPerPage) ? `hover:cursor-pointer` : `hover:cursor-auto`}`} onClick={handlePageChangeUp} />
+          <PaginationNext 
+          className={`${pageNum < Math.ceil(employees.length/numOfEntriesPerPage) ? `hover:cursor-pointer` : `hover:cursor-auto opacity-50 hover:bg-transparent`}`} 
+          onClick={handlePageChangeUp} 
+          aria-disabled={pageNum <= Math.ceil(employees.length/numOfEntriesPerPage)}
+          tabIndex={pageNum <= Math.ceil(employees.length/numOfEntriesPerPage) ? -1 : undefined}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
