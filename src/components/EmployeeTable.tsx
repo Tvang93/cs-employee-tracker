@@ -44,18 +44,6 @@ const EmployeeTable = () => {
 
     // Updating sort functions
     const changeSortBy = (value: string) => {
-        // if (value == "name" && sortBy == "name") {
-        //     setSortBy(`${value}-reverse`);
-        // } else if (value == "hire-date" && sortBy == "hire-date") {
-        //     setSortBy(`${value}-reverse`);
-        // } else {
-        //     setSortBy(value);
-        // }
-
-        // if(value != sortBy){
-        //     setSortBy(value)
-        // }
-
         if(value != sortByJob) {
             setSortByJob("");
         }
@@ -111,8 +99,6 @@ const EmployeeTable = () => {
     // Sorting the employees
     useEffect(() => {
         const sortingEmployees = employees;
-        console.log("sortByJob", sortByJob)
-        console.log("debugging", sortBy)
         const handleSorting = (arrToSort: Employee[]) => {
             switch (sortBy) {
                 case "name":
@@ -131,20 +117,10 @@ const EmployeeTable = () => {
                         (a: Employee, b: Employee) => Number(new Date(a.hireDate)) - Number(new Date(b.hireDate))
                     );
                     break;
-                // case "job-title":
-                //     return sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob);
-                    // console.log(sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob))
-                    // console.log(sortingEmployees)
-                    // break;
                 default:
                     arrToSort.sort((a: Employee, b: Employee) => a.id - b.id);
                     break;
             }
-            // if(sortBy === "job-title"){
-            //     setSortedEmployees([...sortingEmployees.filter((employee: Employee) => employee.jobTitle == sortByJob)]);
-            // }else{
-            //     setSortedEmployees([...sortingEmployees]);
-            // }
             setSortedEmployees([...arrToSort]);
         };
         if(sortByJob.trim() != ""){
