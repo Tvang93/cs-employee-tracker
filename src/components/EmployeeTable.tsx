@@ -11,6 +11,7 @@ import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from '.
 import EmployeeModal from './EmployeeModal';
 import { useAppContext } from '@/lib/context/context';
 import { set } from 'react-hook-form';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select';
 
 const EmployeeTable = () => {
     const { push } = useRouter();
@@ -72,7 +73,7 @@ const EmployeeTable = () => {
     const handleViewEmployee = async (id: number) => {
         await setEmployeeId(id);
 
-        push('/employee-page');
+        push(`/employee-page/${id}`);
     };
 
     // Getting the user token from storage
@@ -147,7 +148,6 @@ const EmployeeTable = () => {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Name
-                {/* ----------------This section is off (sorting) ------------------------ */}
                                     {sortBy === "name" ? <FaCaretDown className="ml-2" /> : sortBy === "name-reverse" ? <FaCaretUp className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
@@ -161,7 +161,6 @@ const EmployeeTable = () => {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className="text-sm text-gray-600 hover:cursor-pointer">
                                     Hire date
-                {/* ----------------This section is off (sorting) ------------------------ */}
                                     {sortBy === "hire-date" ? <FaCaretUp className="ml-2" /> : sortBy === "hire-date-reverse" ? <FaCaretDown className="ml-2" /> : ""}
                                 </Button>
                             </DropdownMenuTrigger>
@@ -183,6 +182,25 @@ const EmployeeTable = () => {
                             <option value="IT Support Specialist">IT Support Specialist</option>
                             <option value="Software Engineer">Software Engineer</option>
                         </select>
+
+                        {/* <Select>
+                            <SelectTrigger>
+                                <SelectValue 
+                                className="ml-3 text-sm border rounded p-1 hover:cursor-pointer"
+                                onChange={changeSortByJob}
+                                placeholder="Job Title"
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Job Title</SelectLabel>
+                            <SelectItem className='hover:cursor-pointer' value="Customer Support">Customer Support</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="IT Support Specialist">IT Support Specialist</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="Software Engineer">Software Engineer</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                        </Select> */}
+
                     </div>
                 </div>
             </div>
@@ -214,7 +232,7 @@ const EmployeeTable = () => {
                                 <TableCell>{employee.jobTitle}</TableCell>
                                 <TableCell>{employee.hireDate}</TableCell>
                                 <TableCell className="flex gap-3 justify-end">
-                                    <Button onClick={() => handleViewEmployee(employee.id)}>
+                                    <Button className='hover:cursor-pointer' onClick={() => handleViewEmployee(employee.id)}>
                                         View
                                     </Button>
                                     <EmployeeModal type="Edit" employee={employee} refreshEmployees={handleGetEmployees} />

@@ -12,6 +12,7 @@ import { Calendar } from './ui/calendar';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select';
 
 
 // Valid values for type: "Add" & "Edit"
@@ -163,7 +164,24 @@ const EmployeeModal = ({ type, employee, refreshEmployees }: { type: 'Add' | 'Ed
                             </div>
 
     {/* -------------------- make change here -------------------------- */}
+                        {/* <Select>
+                            <SelectTrigger id="jobTitle" className="hover:cursor-pointer" >
+                                <SelectValue 
+                                onChange={handleEmployeeToChange}
+                                placeholder="Job Title"
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Job Title</SelectLabel>
+                            <SelectItem className='hover:cursor-pointer' value="Customer Support">Customer Support</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="IT Support Specialist">IT Support Specialist</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="Software Engineer">Software Engineer</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                        </Select> */}
                             <select
+                            id="jobTitle"
                             className="ml-3 text-sm border rounded p-1 hover:cursor-pointer"
                             value={employeeToChange.jobTitle}
                             onChange={handleEmployeeToChange}

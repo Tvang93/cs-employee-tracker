@@ -26,15 +26,15 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
             <div>
                 <p className="text-sm font-semibold">Status</p>
                 <Select>
-                    <SelectTrigger>
+                    <SelectTrigger className='hover:cursor-pointer'>
                         <SelectValue placeholder="Select a status" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Status</SelectLabel>
-                            <SelectItem value="Active">Active</SelectItem>
-                            <SelectItem value="Sick">Sick</SelectItem>
-                            <SelectItem value="Out of Office">Out of Office</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="Active">Active</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="Sick">Sick</SelectItem>
+                            <SelectItem className='hover:cursor-pointer' value="Out of Office">Out of Office</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -46,7 +46,7 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
                             <PopoverTrigger asChild>
                                 <Button
                                     variant={"outline"}
-                                    className={cn("w-full justify-start text-left font-normal text-muted-foreground")}
+                                    className={cn("w-full justify-start text-left font-normal text-muted-foreground hover:cursor-pointer")}
                                 >
                                     <CalendarIcon />
                                     <span>Pick a date</span>
@@ -64,8 +64,8 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
 
 
             <div className="flex justify-between pt-4">
-                <Button onClick={() => setEdit(false)}>Cancel</Button>
-                {employee && <Button variant="outline">Save Edits</Button>}
+                <Button className='hover:cursor-pointer' onClick={() => setEdit(false)}>Cancel</Button>
+                {employee && <Button className='hover:cursor-pointer' variant="outline">Save Edits</Button>}
             </div>
         </>
     )
