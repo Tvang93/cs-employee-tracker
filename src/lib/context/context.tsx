@@ -11,9 +11,9 @@ interface AppContext {
 
 export const AppContext = createContext<AppContext>({
     isLoggedIn: false,
-    setIsLoggedIn: (bool: boolean) => '',
+    setIsLoggedIn: (bool: boolean) => bool,
     employeeId: 0,
-    setEmployeeId: (id: number) => {}
+    setEmployeeId: (id: number) => id
 });
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {

@@ -55,9 +55,14 @@ const EmployeeModal = ({
     setOpenModal(true);
   };
 
+  useEffect(()=>{
+    if(!openModal){
+            setEmployeeToChange({ id: 0, name: "", jobTitle: "", hireDate: "" });
+    }
+  }, [openModal])
+
   const onCloseModal = () => {
     setOpenModal(false);
-    setEmployeeToChange({ id: 0, name: "", jobTitle: "", hireDate: "" });
   };
 
   // Change employee functions
