@@ -48,6 +48,7 @@ const EmployeeTable = () => {
   const [sortBy, setSortBy] = useState("");
   const [sortByJob, setSortByJob] = useState("");
 
+  // Number of Entries Per Page (can set number)
   const numOfEntriesPerPage = 10
 
   // Function to get employees
@@ -75,10 +76,6 @@ function chunkArray<T>(array: T[], size: number): T[][] {
   useEffect(()=>{
     setSortedEmployeesArr(chunkArray(employees, numOfEntriesPerPage))
   }, [employees])
-
-//   useEffect(()=>{
-//     console.log(num)
-//   }, [num])
 
   // Updating sort functions
   const changeSortBy = (value: string) => {
