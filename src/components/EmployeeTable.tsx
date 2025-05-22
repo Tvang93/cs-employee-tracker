@@ -10,8 +10,6 @@ import { Button } from './ui/button';
 import { TableHeader, TableRow, TableHead, TableBody, TableCell, Table } from './ui/table';
 import EmployeeModal from './EmployeeModal';
 import { useAppContext } from '@/lib/context/context';
-import { set } from 'react-hook-form';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select';
 
 const EmployeeTable = () => {
     const { push } = useRouter();
