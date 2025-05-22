@@ -44,7 +44,7 @@ const EmployeeTable = () => {
 
     // Updating sort functions
     const changeSortBy = (value: string) => {
-        if(value != sortByJob) {
+        if(sortByJob) {
             setSortByJob("");
         }
         
