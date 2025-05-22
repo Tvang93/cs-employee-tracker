@@ -90,7 +90,7 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
                                     className={cn("w-full justify-start text-left font-normal text-muted-foreground hover:cursor-pointer")}
                                 >
                                     <CalendarIcon />
-                                    <span>{new Date(employee.hireDate).toLocaleDateString()}</span>
+                                    <span>{employee.hireDate}</span>
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0">

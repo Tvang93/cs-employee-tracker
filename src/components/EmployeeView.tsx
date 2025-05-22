@@ -9,6 +9,13 @@ import { useRouter } from 'next/navigation'
 const EmployeeView = ({ employee, setEdit }: { employee: Employee, setEdit: (value: boolean) => void }) => {
     const { push } = useRouter();
 
+      const formatDateForInput = (date: string) => {
+    if (!date) return undefined;
+
+    const [year, month, day] = date.toString().split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
+
     return (
         <>
             <div>
@@ -30,7 +37,7 @@ const EmployeeView = ({ employee, setEdit }: { employee: Employee, setEdit: (val
 
             <div>
                 <p className="text-sm font-semibold">Hire Date</p>
-                <p>{new Date(employee.hireDate).toLocaleDateString()}</p>
+                <p>{employee.hireDate}</p>
             </div>
 
 
