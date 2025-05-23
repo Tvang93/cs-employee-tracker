@@ -1,7 +1,7 @@
 'use client'
 
 import { Employee } from '@/lib/interfaces/interfaces'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'

@@ -26,13 +26,12 @@ const EmployeeEditView = ({
   employee: Employee;
   setEdit: (value: boolean) => void;
 }) => {
-//   const [details, setDetails] = useState<string>("");
-//   const [status, setStatus] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
   const [employeeToChange, setEmployeeToChange] = useState<Employee>(employee);
-//   const [makeEdits, setMakeEdits] = useState<boolean>(false);
 
   const [token, setToken] = useState("");
 
+  // get token
   useEffect(() => {
     const handleToken = async () => {
       if (localStorage.getItem("user")) {
@@ -46,39 +45,33 @@ const EmployeeEditView = ({
     handleToken();
   }, []);
 
-//   useEffect(() => {
-//     if(makeEdits) {
-//         const updateEmployee = async () => {
-//         const didItUpdate = await updateEmployeeDetails(token, employeeToChange);
-//         if(didItUpdate){
-//             setEdit(false)
-//         }
-//         }
-//         updateEmployee()
-//     }
-//     setMakeEdits(false)
-//   }, [makeEdits]);
+  // Change employee functions
+  const handleEmployeeToChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setEmployeeToChange({
+      ...employeeToChange,
+      [e.target.id]: e.target.value,
+    });
+  };
 
-    // Change employee functions
-    const handleEmployeeToChange = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-      setEmployeeToChange({
-        ...employeeToChange,
-        [e.target.id]: e.target.value,
-      });
-    };
+  useEffect(() => {
+    setEmployeeToChange({
+      ...employeeToChange,
+      status: status,
+    });
+  }, [status]);
 
-    const handleSomething = (e: React.MouseEvent<HTMLDivElement>) =>{
-        console.log(e.target)
+  //make edits
+  const handleSaveEdits = async () => {
+    const didItUpdate: boolean = await updateEmployeeDetails(
+      token,
+      employeeToChange
+    );
+    if (didItUpdate) {
+      setEdit(false);
     }
-
-    const handleSaveEdits = async() => {
-        const didItUpdate = await updateEmployeeDetails(token, employeeToChange);
-        if(didItUpdate){
-            setEdit(false)
-        }
-    } 
+  };
 
   // Date functions
   const formatDateForInput = (date: string) => {
@@ -97,22 +90,26 @@ const EmployeeEditView = ({
 
       <div>
         <p className="text-sm font-semibold">Details</p>
-        <Input id="details" placeholder={employee.details ? employee.details : ""} onChange={handleEmployeeToChange} />
+        <Input
+          id="details"
+          placeholder={employee.details ? employee.details : ""}
+          onChange={handleEmployeeToChange}
+        />
       </div>
 
       <div>
         <p className="text-sm font-semibold">Status</p>
-        <Select>
+        <Select onValueChange={(value) => setStatus(value)}>
           <SelectTrigger className="hover:cursor-pointer">
-            <SelectValue placeholder="Select a status"/>
+            <SelectValue placeholder="Select a status" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Status</SelectLabel>
-              <SelectItem className="hover:cursor-pointer" value="Active" onClick={(e)=>handleSomething(e)}>
+              <SelectItem className="hover:cursor-pointer" value="Active">
                 Active
               </SelectItem>
-              <SelectItem className="hover:cursor-pointer" value="Sick" >
+              <SelectItem className="hover:cursor-pointer" value="Sick">
                 Sick
               </SelectItem>
               <SelectItem
@@ -156,7 +153,11 @@ const EmployeeEditView = ({
           Cancel
         </Button>
         {employee && (
-          <Button className="hover:cursor-pointer" variant="outline" onClick={handleSaveEdits}>
+          <Button
+            className="hover:cursor-pointer"
+            variant="outline"
+            onClick={handleSaveEdits}
+          >
             Save Edits
           </Button>
         )}
