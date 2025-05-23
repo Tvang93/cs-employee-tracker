@@ -43,7 +43,7 @@ const EmployeePageComponent = (params:  params) => {
         if (employeeId != 0) {
             getEmployee();
         }
-    }, [token, employeeId])
+    }, [token, employeeId, isEditing])
 
     return (
         <div className="min-h-screen flex flex-col justify-center max-w-3xl mx-auto">

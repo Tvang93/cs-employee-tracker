@@ -1,20 +1,13 @@
 'use client'
 
 import { Employee } from '@/lib/interfaces/interfaces'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation'
 
 const EmployeeView = ({ employee, setEdit }: { employee: Employee, setEdit: (value: boolean) => void }) => {
     const { push } = useRouter();
-
-      const formatDateForInput = (date: string) => {
-    if (!date) return undefined;
-
-    const [year, month, day] = date.toString().split("-").map(Number);
-    return new Date(year, month - 1, day);
-  };
 
     return (
         <>

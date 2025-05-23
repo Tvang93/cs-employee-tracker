@@ -109,7 +109,6 @@ const getEmployeeById = async (token: string, id: number) => {
     if(!response.ok) return 'Not Authorized';
     
     const data = await response.json();
-    console.log(data);
     return data;
 }
 

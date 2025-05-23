@@ -1,39 +1,84 @@
-'use client'
+"use client";
 
-import { Employee } from '@/lib/interfaces/interfaces'
-import React, { useEffect, useState } from 'react'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from './ui/select'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { cn } from '@/lib/utils'
-import { CalendarIcon } from 'lucide-react'
-import { Calendar } from './ui/calendar'
+import { Employee } from "@/lib/interfaces/interfaces";
+import React, { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "./ui/calendar";
+import { updateEmployeeDetails } from "@/lib/services/employee-service";
 
-const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: (value: boolean) => void }) => {
-    const [details, setDetails] = useState<string>("")
-    const [status, setStatus] = useState<string>("")
-      const [employeeToChange, setEmployeeToChange] = useState<Employee>({
-        id: 0,
-        name: "",
-        jobTitle: "",
-        hireDate: "",
+const EmployeeEditView = ({
+  employee,
+  setEdit,
+}: {
+  employee: Employee;
+  setEdit: (value: boolean) => void;
+}) => {
+//   const [details, setDetails] = useState<string>("");
+//   const [status, setStatus] = useState<string>("");
+  const [employeeToChange, setEmployeeToChange] = useState<Employee>(employee);
+//   const [makeEdits, setMakeEdits] = useState<boolean>(false);
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const handleToken = async () => {
+      if (localStorage.getItem("user")) {
+        setToken(await JSON.parse(localStorage.getItem("user")!).token);
+      }
+      if (sessionStorage.getItem("user")) {
+        setToken(await JSON.parse(sessionStorage.getItem("user")!).token);
+      }
+    };
+
+    handleToken();
+  }, []);
+
+//   useEffect(() => {
+//     if(makeEdits) {
+//         const updateEmployee = async () => {
+//         const didItUpdate = await updateEmployeeDetails(token, employeeToChange);
+//         if(didItUpdate){
+//             setEdit(false)
+//         }
+//         }
+//         updateEmployee()
+//     }
+//     setMakeEdits(false)
+//   }, [makeEdits]);
+
+    // Change employee functions
+    const handleEmployeeToChange = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+      setEmployeeToChange({
+        ...employeeToChange,
+        [e.target.id]: e.target.value,
       });
+    };
 
-    useEffect(()=>{
-        setEmployeeToChange(employee)
-    }, [])
+    const handleSomething = (e: React.MouseEvent<HTMLDivElement>) =>{
+        console.log(e.target)
+    }
 
-    useEffect(()=>{
-
-    }, [details])
-
-      const handleEmployeeToChangeHireDate = (date: string) => {
-    setEmployeeToChange({
-      ...employeeToChange,
-      hireDate: date,
-    });
-  };
+    const handleSaveEdits = async() => {
+        const didItUpdate = await updateEmployeeDetails(token, employeeToChange);
+        if(didItUpdate){
+            setEdit(false)
+        }
+    } 
 
   // Date functions
   const formatDateForInput = (date: string) => {
@@ -43,78 +88,81 @@ const EmployeeEditView = ({ employee, setEdit }: { employee: Employee, setEdit: 
     return new Date(year, month - 1, day);
   };
 
-  const formatDateFromInput = (date: Date | undefined) => {
-    if (!date) return "";
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+  return (
+    <>
+      <div>
+        <p className="text-sm font-semibold">Job Title</p>
+        <Input disabled value={employee.jobTitle} />
+      </div>
 
-    return `${year}-${month}-${day}`;
-  };
+      <div>
+        <p className="text-sm font-semibold">Details</p>
+        <Input id="details" placeholder={employee.details ? employee.details : ""} onChange={handleEmployeeToChange} />
+      </div>
 
-    return (
-        <>
-            <div>
-                <p className="text-sm font-semibold">Job Title</p>
-                <Input readOnly value={employee.jobTitle} />
-            </div>
+      <div>
+        <p className="text-sm font-semibold">Status</p>
+        <Select>
+          <SelectTrigger className="hover:cursor-pointer">
+            <SelectValue placeholder="Select a status"/>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Status</SelectLabel>
+              <SelectItem className="hover:cursor-pointer" value="Active" onClick={(e)=>handleSomething(e)}>
+                Active
+              </SelectItem>
+              <SelectItem className="hover:cursor-pointer" value="Sick" >
+                Sick
+              </SelectItem>
+              <SelectItem
+                className="hover:cursor-pointer"
+                value="Out of Office"
+              >
+                Out of Office
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
 
-            <div>
-                <p className="text-sm font-semibold">Details</p>
-                <Input onChange={(e)=>(setDetails(e.target.value))} />
-            </div>
+      <div>
+        <p className="text-sm font-semibold">Hire Date</p>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-full justify-start text-left font-normal text-muted-foreground hover:cursor-pointer"
+              )}
+              disabled
+            >
+              <CalendarIcon />
+              <span>{employee.hireDate}</span>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={formatDateForInput(employee.hireDate)}
+              disabled
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
 
-            <div>
-                <p className="text-sm font-semibold">Status</p>
-                <Select>
-                    <SelectTrigger className='hover:cursor-pointer'>
-                        <SelectValue placeholder="Select a status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Status</SelectLabel>
-                            <SelectItem className='hover:cursor-pointer' value="Active">Active</SelectItem>
-                            <SelectItem className='hover:cursor-pointer' value="Sick">Sick</SelectItem>
-                            <SelectItem className='hover:cursor-pointer' value="Out of Office">Out of Office</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </div>
+      <div className="flex justify-between pt-4">
+        <Button className="hover:cursor-pointer" onClick={() => setEdit(false)}>
+          Cancel
+        </Button>
+        {employee && (
+          <Button className="hover:cursor-pointer" variant="outline" onClick={handleSaveEdits}>
+            Save Edits
+          </Button>
+        )}
+      </div>
+    </>
+  );
+};
 
-            <div>
-                <p className="text-sm font-semibold">Hire Date</p>
-                <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className={cn("w-full justify-start text-left font-normal text-muted-foreground hover:cursor-pointer")}
-                                >
-                                    <CalendarIcon />
-                                    <span>{employee.hireDate}</span>
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0">
-                                <Calendar
-                                    mode="single"
-                                    selected={formatDateForInput(employee.hireDate)}
-                                    // onSelect={(e) => {
-                                    //     console.log("test");
-                                    //     handleEmployeeToChangeHireDate(formatDateFromInput(e))
-                                    //     }
-                                    // }
-                                    initialFocus
-                                />
-                            </PopoverContent>
-                        </Popover>
-            </div>
-
-
-            <div className="flex justify-between pt-4">
-                <Button className='hover:cursor-pointer' onClick={() => setEdit(false)}>Cancel</Button>
-                {employee && <Button className='hover:cursor-pointer' variant="outline">Save Edits</Button>}
-            </div>
-        </>
-    )
-}
-
-export default EmployeeEditView
+export default EmployeeEditView;
